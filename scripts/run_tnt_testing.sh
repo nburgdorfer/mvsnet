@@ -47,11 +47,12 @@ fi
 CODE_DIR=../MVSNet/mvsnet/
 
 #for SCENE in Barn Caterpillar Church Courthouse Ignatius Meetingroom Truck
-for SCENE in Ignatius
+for SCENE in Barn Ignatius Truck
+#for SCENE in Ignatius
 do
     cd ${CODE_DIR}
     echo "Working on ${SCENE}..."
     
-    python test.py --dense_folder ${MVSNET_DIR}${SCENE}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1920 --max_h 1056 --max_d 192 --interval_scale 0.8 #> /dev/null
+    python test.py --dense_folder ${MVSNET_DIR}${SCENE}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d 256 --interval_scale 1.06 > /dev/null
     echo "Done!"
 done
