@@ -45,12 +45,12 @@ if [ -z $MVSNET_DIR ]; then
 fi
 
 CODE_DIR=../MVSNet/mvsnet/
+cd ${CODE_DIR}
 
 #for SCENE in Barn Caterpillar Church Courthouse Ignatius Meetingroom Truck
 for SCENE in Barn Ignatius Truck
 #for SCENE in Ignatius
 do
-    cd ${CODE_DIR}
     echo "Working on ${SCENE}..."
     
     python test.py --dense_folder ${MVSNET_DIR}${SCENE}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d 256 --interval_scale 1.06 > /dev/null
