@@ -110,12 +110,12 @@ cd ${SRC_DIR}
 
 SCANS=(1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118)
 
-for SCAN in $SCANS
+for SCAN in ${SCANS[@]}
 do
     printf -v PADDED_SCAN_NUM "%03d" $SCAN
     echo "Working on scan${PADDED_SCAN_NUM}..."
     
-    python test.py --dense_folder ${MVSNET_DIR}scan${PADDED_SCAN_NUM}_test/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d 256 --interval_scale 0.8 #> /dev/null
+    python test.py --dense_folder ${MVSNET_DIR}scan${PADDED_SCAN_NUM}_test/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d 256 --interval_scale 0.8 > /dev/null
 
 	python depthfusion.py --dense_folder ${MVSNET_DIR}scan${PADDED_SCAN_NUM}_test/ --fusibile_exe_path $FUSE_EXE --prob_threshold 0.8 
 
