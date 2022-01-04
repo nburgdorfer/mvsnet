@@ -5,7 +5,7 @@ function usage {
         echo "Usage: ./$(basename $0) [OPTION]...
 
 OPTIONS:
-  -d,           Path to the MVSNet DTU data directory.
+  -d,           Path to the MVSNet TNT data directory.
   -m,           Path to the saved network model."
 }
 
@@ -21,7 +21,7 @@ while getopts ${optstring} arg; do
         ;;
     d)
         MVSNET_DIR=$OPTARG
-        echo "Data path for MVSNet DTU set to '${MVSNET_DIR}'..."
+        echo "Data path for MVSNet TNT set to '${MVSNET_DIR}'..."
         ;;
     m)
         MODEL=$OPTARG
@@ -40,19 +40,19 @@ if [ -z $MODEL ]; then
     echo "Model set to default value '${MODEL}'..."
 fi
 if [ -z $MVSNET_DIR ]; then
-    MVSNET_DIR=~/Data/MVSNet/dtu/testing/
-    echo "Data path for MVSNet DTU set to default value '${MVSNET_DIR}'..."
+    MVSNET_DIR=~/Data/MVSNet/tanks_and_temples/training/
+    echo "Data path for MVSNet TNT set to default value '${MVSNET_DIR}'..."
 fi
 
 CODE_DIR=../MVSNet/mvsnet/
+cd ${CODE_DIR}
 
-for SCAN in 1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118
+#for SCENE in Barn Caterpillar Church Courthouse Ignatius Meetingroom Truck
+for SCENE in Barn Ignatius Truck
+#for SCENE in Ignatius
 do
-    cd ${CODE_DIR}
-
-    printf -v PADDED_SCAN_NUM "%03d" $SCAN
-    echo "Working on scan${PADDED_SCAN_NUM}..."
+    echo "Working on ${SCENE}..."
     
-    python test.py --dense_folder ${MVSNET_DIR}scan${PADDED_SCAN_NUM}_test/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1600 --max_h 1184 --max_d 256 --interval_scale 0.8 > /dev/null
+    python test.py --dense_folder ${MVSNET_DIR}${SCENE}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d 256 --interval_scale 1.06 > /dev/null
     echo "Done!"
 done
