@@ -66,19 +66,19 @@ if [ -z $EVAL_CODE_DIR ]; then
     echo "DTU MVS Matlab evaluation code path set to default value '${EVAL_CODE_DIR}'..."
 fi
 
-# default value for option d)
+# default value for option -d
 if [ -z $MVSNET_DIR ]; then
     MVSNET_DIR=~/Data/MVSNet/dtu/testing/
     echo "Data path for MVSNet DTU set to default value '${MVSNET_DIR}'..."
 fi
 
-# default value for option f)
+# default value for option -f
 if [ -z $FUSE_EXE ]; then
     FUSE_EXE=~/dev/research/fusibile/fusibile
     echo "Path to fusibile executable set to default value '${FUSE_EXE}'..."
 fi
 
-# default value for option m)
+# default value for option -m
 if [ -z $MODEL ]; then
     MODEL=~/Data/MVSNet/models/3DCNNs/model.ckpt
     echo "Model set to default value '${MODEL}'..."
@@ -96,7 +96,7 @@ if [ -z $EVAL_RESULTS_DIR ]; then
     echo "DTU MVS Results path set to default value '${EVAL_RESULTS_DIR}'..."
 fi
 
-# default value for option s)
+# default value for option -s
 if [ -z $SRC_DIR ]; then
 	SRC_DIR=../MVSNet/mvsnet/
     echo "MVSNet source code directory set to default value '${SRC_DIR}'..."
@@ -129,7 +129,7 @@ if [ "$(ls -A $EVAL_RESULTS_DIR)" ]; then
     rm -r $EVAL_RESULTS_DIR*
 fi
 
-USED_SETS="[${SCANS}]"
+USED_SETS="[${SCANS[@]}]"
 
 # run matlab evaluation on merged output point cloud
 matlab -nodisplay -nosplash -nodesktop -r "clear all; close all; format compact; arg_method='mvsnet'; UsedSets=${USED_SETS}; run('${EVAL_CODE_DIR}BaseEvalMain_web.m'); clear all; close all; format compact; arg_method='mvsnet'; UsedSets=${USED_SETS}; run('${EVAL_CODE_DIR}ComputeStat_web.m'); exit;" | tail -n +10
