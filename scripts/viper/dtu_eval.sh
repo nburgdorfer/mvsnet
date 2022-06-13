@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # basic params
-DTU_DIR=/media/nate/Data/MVSNet/dtu/testing_highres/
-MODEL=/media/nate/Data/MVSNet/models/3DCNNs/model.ckpt
-EVAL=/media/nate/Data/Evaluation/dtu/
+DTU_DIR=/media/Data/nate/MVSNet/dtu/testing_highres/
+MODEL=/media/Data/nate/MVSNet/models/3DCNNs/model.ckpt
+EVAL=/media/Data/nate/Evaluation/dtu/
 SRC_DIR=../MVSNet/mvsnet/
 FUSE_EXE=~/dev/research/fusibile/fusibile
 EVAL_CODE_DIR=${EVAL}matlab_code/
@@ -30,7 +30,7 @@ inference () {
 	cd ${SRC_DIR}
     echo -e "\e[1;33mRunning MVSNet on scan ${1}\e[0;37m"
     
-    python test.py --dense_folder ${DTU_DIR}scan${1}_test/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1152 --max_h 864 --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} > /dev/null
+    python test.py --dense_folder ${DTU_DIR}scan${1}_test/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL  --ckpt_step 150000 --max_w 1600 --max_h 1184 --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} > /dev/null
 
 	python depthfusion.py --dense_folder ${DTU_DIR}scan${1}_test/ --fusibile_exe_path $FUSE_EXE --prob_threshold ${PROB_TH} 
 

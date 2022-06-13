@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # basic params
-TNT_DIR=/media/nate/Data/MVSNet/tanks_and_temples/training/
-MODEL=~/Data/MVSNet/models/3DCNNs/model.ckpt
-EVAL_CODE_DIR=/media/nate/Data/Evaluation/tnt/TanksAndTemples/python_toolbox/evaluation/
+TNT_DIR=/media/Data/nate/MVSNet/tanks_and_temples/training/
+MODEL=/media/Data/nate/MVSNet/models/3DCNNs/model.ckpt
+EVAL_CODE_DIR=/media/Data/nate/Evaluation/tnt/TanksAndTemples/python_toolbox/evaluation/
 SRC_DIR=../MVSNet/mvsnet/
 SCALE=0.8
 DEPTH_PLANES=256
@@ -26,7 +26,7 @@ inference() {
 	## convert mvsnet cameras into .log format (w/ alignment)
 	python ../../tools/conversion/convert_to_log.py -d ${TNT_DIR}${1}/cams/ -f mvsnet -o ${TNT_DIR}${1}/cams/camera_pose.log
     
-    python test.py --dense_folder ${TNT_DIR}${1}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL --ckpt_step 150000 --max_w 1920 --max_h 1056 --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} #> /dev/null
+    python test.py --dense_folder ${TNT_DIR}${1}/ --regularization '3DCNNs' --pretrained_model_ckpt_path $MODEL --ckpt_step 150000 --max_w 1920 --max_h 1056 --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} > /dev/null
 
 	python depthfusion.py --dense_folder ${TNT_DIR}${1}/ --fusibile_exe_path $FUSE_EXE --prob_threshold ${PROB_TH}
 
