@@ -46,7 +46,7 @@ tf.app.flags.DEFINE_integer('max_h', 1200,
                             """Maximum image height when testing.""")
 tf.app.flags.DEFINE_float('sample_scale', 0.25, 
                             """Downsample scale for building cost volume (W and H).""")
-tf.app.flags.DEFINE_float('interval_scale', 0.8, 
+tf.app.flags.DEFINE_float('interval_scale', 1.0, 
                             """Downsample scale for building cost volume (D).""")
 tf.app.flags.DEFINE_float('base_image_size', 8, 
                             """Base image size""")
@@ -147,7 +147,6 @@ class MVSGenerator:
                 croped_images = np.stack(croped_images, axis=0)
                 scaled_cams = np.stack(scaled_cams, axis=0)
                 self.counter += 1
-                print(scaled_images.shape)
                 yield (scaled_images, centered_images, scaled_cams, image_index) 
 
 def mvsnet_pipeline(mvs_list):
@@ -255,7 +254,7 @@ def mvsnet_pipeline(mvs_list):
             # paths
             init_depth_map_path = output_folder + ('/%08d_init.pfm' % out_index)
             prob_map_path = output_folder + ('/%08d_prob.pfm' % out_index)
-            out_ref_image_path = output_folder + ('/%08d.png' % out_index)
+            out_ref_image_path = output_folder + ('/%08d.jpg' % out_index)
             out_ref_cam_path = output_folder + ('/%08d.txt' % out_index)
 
             # save output

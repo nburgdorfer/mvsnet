@@ -5,6 +5,7 @@ TNT_DIR=/media/Data/nate/MVSNet/tanks_and_temples/training/
 MODEL=/media/Data/nate/MVSNet/models/3DCNNs/model.ckpt
 EVAL_CODE_DIR=/media/Data/nate/Evaluation/tnt/TanksAndTemples/python_toolbox/evaluation/
 SRC_DIR=../MVSNet/mvsnet/
+FUSE_EXE=~/dev/research/fusibile/fusibile
 SCALE=0.8
 DEPTH_PLANES=256
 PROB_TH=0.8
@@ -14,6 +15,7 @@ echo "Data path for Tanks and Temples set to '${TNT_DIR}'..."
 echo "Network model file set to '${MODEL}'..."
 echo "Tanks and Temples evaluation code path set to '${EVAL_CODE_DIR}'..."
 echo "Source code path set to '${SRC_DIR}'..."
+echo "Fusible executable path set to '${FUSE_EXE}'..."
 echo "Scale set to '${SCALE}'..."
 echo "Number of depth planes set to '${DEPTH_PLANES}'..."
 echo "Fusion confidence threshold set to '${PROB_TH}'..."
