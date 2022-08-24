@@ -51,9 +51,7 @@ inference() {
 		printf -v PADDED_SCAN_NUM "%03d" $SCAN
 		echo "Working on scan${PADDED_SCAN_NUM}..."
 		
-		python test.py --dense_folder ${DATA_DIR}scan${PADDED_SCAN_NUM}/ --output_folder ${OUTPUT_DIR}scan${PADDED_SCAN_NUM}/ --regularization ${REG} --pretrained_model_ckpt_path $MODEL  --ckpt_step ${CKPT_STEP} --max_w ${W} --max_h ${H} --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} # > /dev/null
-
-		exit 0;
+		python test.py --dense_folder ${DATA_DIR}scan${PADDED_SCAN_NUM}/ --output_folder ${OUTPUT_DIR}scan${PADDED_SCAN_NUM}/ --regularization ${REG} --pretrained_model_ckpt_path $MODEL  --ckpt_step ${CKPT_STEP} --max_w ${W} --max_h ${H} --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} > /dev/null
 	done
 }
 

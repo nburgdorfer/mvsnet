@@ -246,6 +246,8 @@ def inference_mem(images, cams, depth_num, depth_start, depth_interval, is_maste
     # probability map
     prob_map = get_propability_map(probability_volume, estimated_depth_map, depth_start, depth_interval)
 
+    print(estimated_depth_map.shape)
+
     # return filtered_depth_map, 
     return estimated_depth_map, prob_map
 
