@@ -30,6 +30,8 @@ from loss import *
 # input path
 tf.app.flags.DEFINE_string('dense_folder', None, 
                            """Root path to dense folder.""")
+tf.app.flags.DEFINE_string('scan_dir', None, 
+                           """Scan folder for current eval.""")
 tf.app.flags.DEFINE_string('output_folder', None, 
                            """Path to output folder.""")
 tf.app.flags.DEFINE_string('pretrained_model_ckpt_path', 
@@ -290,7 +292,7 @@ def mvsnet_pipeline(mvs_list):
 def main(_):  # pylint: disable=unused-argument
     """ program entrance """
     # generate input path list
-    mvs_list = gen_pipeline_mvs_list(FLAGS.dense_folder)
+    mvs_list = gen_pipeline_mvs_list(FLAGS.dense_folder, FLAGS.scan_dir)
     # mvsnet inference
     mvsnet_pipeline(mvs_list)
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # parameters
-DATA_DIR=/media/nate/Data/MVS/dtu/testing/
+DATA_DIR=/media/nate/Data/DTU/
 OUTPUT_DIR=/media/nate/Data/Results/MVSNet/dtu/Output_testing/
 FUSE_EXE=~/dev/research/Fusion/fusibile/fusibile
 MODEL=/media/nate/Data/MVS/MVSNet/dtu/models/3DCNNs/model.ckpt
@@ -52,7 +52,8 @@ inference() {
 		echo "Working on scan${PADDED_SCAN_NUM}..."
 		
 		python test.py \
-			--dense_folder ${DATA_DIR}scan${PADDED_SCAN_NUM}/ \
+			--dense_folder ${DATA_DIR} \
+			--scan_dir scan${PADDED_SCAN_NUM}/ \
 			--output_folder ${OUTPUT_DIR}scan${PADDED_SCAN_NUM}/ \
 			--regularization ${REG} \
 			--pretrained_model_ckpt_path $MODEL \
