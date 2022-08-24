@@ -12,10 +12,10 @@ EVAL_PC_DIR=${EVAL_DIR}mvs_data/Points/${METHOD}/
 EVAL_RESULTS_DIR=${EVAL_DIR}mvs_data/Results/
 SRC_DIR=../MVSNet/mvsnet/
 
-W=1152
-H=864
-#W=1600
-#H=1184
+#W=1152
+#H=864
+W=1600
+H=1184
 REG=3DCNNs
 DEPTH_PLANES=256
 SCALE=0.8
@@ -51,7 +51,17 @@ inference() {
 		printf -v PADDED_SCAN_NUM "%03d" $SCAN
 		echo "Working on scan${PADDED_SCAN_NUM}..."
 		
-		python test.py --dense_folder ${DATA_DIR}scan${PADDED_SCAN_NUM}/ --output_folder ${OUTPUT_DIR}scan${PADDED_SCAN_NUM}/ --regularization ${REG} --pretrained_model_ckpt_path $MODEL  --ckpt_step ${CKPT_STEP} --max_w ${W} --max_h ${H} --max_d ${DEPTH_PLANES} --interval_scale ${SCALE} > /dev/null
+		python test.py \
+			--dense_folder ${DATA_DIR}scan${PADDED_SCAN_NUM}/ \
+			--output_folder ${OUTPUT_DIR}scan${PADDED_SCAN_NUM}/ \
+			--regularization ${REG} \
+			--pretrained_model_ckpt_path $MODEL \
+			--ckpt_step ${CKPT_STEP} \
+			--max_w ${W} \
+			--max_h ${H} \
+			--max_d ${DEPTH_PLANES} \
+			--interval_scale ${SCALE} \
+			> /dev/null
 	done
 }
 
@@ -92,8 +102,8 @@ evaluate_matlab() {
 display_params
 
 # run inference
-#SCANS=({1..24} {28..53} {55..72} {74..77} {82..128})
-SCANS=(1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118)
+SCANS=({1..24} {28..53} {55..72} {74..77} {82..128})
+#SCANS=(1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118)
 inference $SCANS &
 wait
 

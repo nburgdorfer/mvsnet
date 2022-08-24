@@ -9,6 +9,7 @@ from __future__ import print_function
 import os
 import time
 import sys
+import shutil
 import math
 import argparse
 import numpy as np
@@ -89,6 +90,7 @@ class MVSGenerator:
                     #image_file = file_io.FileIO(data[2 * view], mode='r')
                     #image = scipy.misc.imread(image_file, mode='RGB')
                     image = cv2.imread(data[2*view])
+                    print(image.shape)
                     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     cam_file = file_io.FileIO(data[2 * view + 1], mode='r')
                     cam = load_cam(cam_file, FLAGS.interval_scale)
@@ -158,8 +160,10 @@ def mvsnet_pipeline(mvs_list):
 
     # create output folder
     output_folder = FLAGS.output_folder
-    if not os.path.isdir(output_folder):
-        os.mkdir(output_folder)
+    if os.path.isdir(output_folder):
+        shutil.rmtree(output_folder)
+    os.mkdir(output_folder)
+
     depth_map_path = os.path.join(output_folder, "depth")
     if not os.path.isdir(depth_map_path):
         os.mkdir(depth_map_path)
