@@ -29,6 +29,8 @@ from loss import *
 # input path
 tf.app.flags.DEFINE_string('dense_folder', None, 
                            """Root path to dense folder.""")
+tf.app.flags.DEFINE_string('output_folder', None, 
+                           """Path to output folder.""")
 tf.app.flags.DEFINE_string('pretrained_model_ckpt_path', 
                            '/data/tf_model/3DCNNs/BlendedMVS/blended_augmented/model.ckpt',
                            """Path to restore the model.""")
@@ -86,8 +88,8 @@ class MVSGenerator:
                 for view in range(min(self.view_num, selected_view_num)):
                     #image_file = file_io.FileIO(data[2 * view], mode='r')
                     #image = scipy.misc.imread(image_file, mode='RGB')
-                    #image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     image = cv2.imread(data[2*view])
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     cam_file = file_io.FileIO(data[2 * view + 1], mode='r')
                     cam = load_cam(cam_file, FLAGS.interval_scale)
                     #if cam[1][3][2] == 0:
@@ -156,9 +158,22 @@ def mvsnet_pipeline(mvs_list):
     print ('Testing sample number: ', len(mvs_list))
 
     # create output folder
-    output_folder = os.path.join(FLAGS.dense_folder, 'depths_mvsnet')
+    output_folder = FLAGS.output_folder
     if not os.path.isdir(output_folder):
         os.mkdir(output_folder)
+    depth_map_path = os.path.join(output_folder, "depth")
+    if not os.path.isdir(depth_map_path):
+        os.mkdir(depth_map_path)
+    conf_map_path = os.path.join(output_folder, "confidence")
+    if not os.path.isdir(conf_map_path):
+        os.mkdir(conf_map_path)
+    out_img_path = os.path.join(output_folder, "rgb")
+    if not os.path.isdir(out_img_path):
+        os.mkdir(out_img_path)
+    out_cam_path = os.path.join(output_folder, "cam")
+    if not os.path.isdir(out_cam_path):
+        os.mkdir(out_cam_path)
+            
 
     # testing set
     mvs_generator = iter(MVSGenerator(mvs_list, FLAGS.view_num))
@@ -253,19 +268,19 @@ def mvsnet_pipeline(mvs_list):
             out_index = np.squeeze(out_index)
 
             # paths
-            init_depth_map_path = output_folder + ('/%08d_init.pfm' % out_index)
-            prob_map_path = output_folder + ('/%08d_prob.pfm' % out_index)
-            out_ref_image_path = output_folder + ('/%08d.png' % out_index)
-            out_ref_cam_path = output_folder + ('/%08d.txt' % out_index)
+            depth_map_file = os.path.join(depth_map_path, "{:08d}_depth.pfm".format(out_index))
+            conf_map_file = os.path.join(conf_map_path, "{:08d}_conf.pfm".format(out_index))
+            out_img_file = os.path.join(out_img_path, "{:08d}.png".format(out_index))
+            out_cam_file = os.path.join(out_cam_path, "{:08d}_cam.txt".format(out_index))
 
             # save output
-            write_pfm(init_depth_map_path, out_init_depth_image)
-            write_pfm(prob_map_path, out_prob_map)
+            write_pfm(depth_map_file, out_init_depth_image)
+            write_pfm(conf_map_file, out_prob_map)
             out_ref_image = cv2.cvtColor(out_ref_image, cv2.COLOR_RGB2BGR)
-            cv2.imwrite(out_ref_image_path, out_ref_image)
+            cv2.imwrite(out_img_file, out_ref_image)
             #image_file = file_io.FileIO(out_ref_image_path, mode='w')
             #scipy.misc.imsave(image_file, out_ref_image)
-            write_cam(out_ref_cam_path, out_ref_cam)
+            write_cam(out_cam_file, out_ref_cam)
             total_step += 1
 
 
