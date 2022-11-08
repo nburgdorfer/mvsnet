@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # parameters
-DATA_DIR=/media/nate/Data/DTU/
-OUTPUT_DIR=/media/nate/Data/Results/MVSNet/dtu/Output_testing/
+DATA_DIR=/media/Data/nate/DTU/
+OUTPUT_DIR=/media/Data2/nate/Results/MVSNet/dtu/Output/
 FUSE_EXE=~/dev/research/Fusion/fusibile/fusibile
-MODEL=/media/nate/Data/MVS/MVSNet/dtu/models/3DCNNs/model.ckpt
+MODEL=/media/Data/nate/Models/MVSNet/dtu/3DCNNs/model.ckpt
 METHOD=mvsnet
-EVAL_DIR=/media/nate/Data/Evaluation/dtu/
+EVAL_DIR=/media/Data/nate/Evaluation/dtu/
 EVAL_CODE_DIR=${EVAL_DIR}matlab_code/
 EVAL_PC_DIR=${EVAL_DIR}mvs_data/Points/${METHOD}/
 EVAL_RESULTS_DIR=${EVAL_DIR}mvs_data/Results/
@@ -62,7 +62,7 @@ inference() {
 			--max_h ${H} \
 			--max_d ${DEPTH_PLANES} \
 			--interval_scale ${SCALE} \
-			> /dev/null
+			#> /dev/null
 	done
 }
 
@@ -101,6 +101,10 @@ evaluate_matlab() {
 }
 
 display_params
+
+if [ ! -d ${OUTPUT_DIR} ]; then
+	mkdir -p ${OUTPUT_DIR};
+fi
 
 # run inference
 SCANS=({1..24} {28..53} {55..72} {74..77} {82..128})
