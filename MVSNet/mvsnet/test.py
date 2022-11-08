@@ -92,7 +92,7 @@ class MVSGenerator:
                     #image_file = file_io.FileIO(data[2 * view], mode='r')
                     #image = scipy.misc.imread(image_file, mode='RGB')
                     image = cv2.imread(data[2*view])
-                    print(image.shape)
+                    #print(image.shape)
                     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     cam_file = file_io.FileIO(data[2 * view + 1], mode='r')
                     cam = load_cam(cam_file, FLAGS.interval_scale)
@@ -111,7 +111,7 @@ class MVSGenerator:
                         cam = load_cam(cam_file, FLAGS.interval_scale)
                         images.append(image)
                         cams.append(cam)
-                print ('range: ', cams[0][1, 3, 0], cams[0][1, 3, 1], cams[0][1, 3, 2], cams[0][1, 3, 3])
+                #print ('range: ', cams[0][1, 3, 0], cams[0][1, 3, 1], cams[0][1, 3, 2], cams[0][1, 3, 3])
 
                 # determine a proper scale to resize input 
                 resize_scale = 1

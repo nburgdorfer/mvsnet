@@ -534,8 +534,8 @@ def gen_mvs_list(mode='training'):
 # for testing
 def gen_pipeline_mvs_list(dense_folder, scan_dir=None):
     """ mvs input path list """
-    image_folder = os.path.join(dense_folder, scan_dir, "images")
-    cam_folder = os.path.join(dense_folder, scan_dir, "cams")
+    image_folder = os.path.join(dense_folder, "Images", scan_dir)
+    cam_folder = os.path.join(dense_folder, "Cameras")
     cluster_list_path = os.path.join(cam_folder, "pair.txt")
     cluster_list = open(cluster_list_path).read().split()
 
