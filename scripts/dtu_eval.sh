@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # parameters
-DATA_DIR=/media/Data/nate/DTU/
-OUTPUT_DIR=/media/Data2/nate/Results/MVSNet/dtu/Output/
+DATA_DIR=/media/nate/Data/DTU/
+OUTPUT_DIR=/media/nate/Drive1/Results/MVSNet/dtu/Output/
 FUSE_EXE=~/dev/research/Fusion/fusibile/fusibile
-MODEL=/media/Data/nate/Models/MVSNet/dtu/3DCNNs/model.ckpt
+MODEL=/media/nate/Data/Models/MVSNet/dtu/3DCNNs/model.ckpt
 METHOD=mvsnet
-EVAL_DIR=/media/Data/nate/Evaluation/dtu/
+EVAL_DIR=/media/nate/Data/Evaluation/dtu/
 EVAL_CODE_DIR=${EVAL_DIR}matlab_code/
 EVAL_PC_DIR=${EVAL_DIR}mvs_data/Points/${METHOD}/
 EVAL_RESULTS_DIR=${EVAL_DIR}mvs_data/Results/
@@ -107,15 +107,12 @@ if [ ! -d ${OUTPUT_DIR} ]; then
 fi
 
 # run inference
-SCANS=({1..24} {28..53} {55..72} {74..77} {82..128})
-#SCANS=(1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118)
-inference $SCANS &
-wait
+#SCANS=({1..24} {28..53} {55..72} {74..77} {82..128})
+SCANS=(1 4 9 10 11 12 13 15 23 24 29 32 33 34 48 49 62 75 77 110 114 118)
+inference $SCANS
 
 ## fuse depth maps
-#fusion_gipuma $SCANS &
-#wait
-#
+fusion_gipuma $SCANS
+
 ## evaluate point clouds
-#evaluate_matlab $SCANS &
-#wait
+evaluate_matlab $SCANS

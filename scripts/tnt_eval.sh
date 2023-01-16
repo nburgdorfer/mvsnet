@@ -3,17 +3,15 @@
 # parameters
 DATASET=training
 
-DATA_DIR=/media/Data/nate/TNT/${DATASET}
-OUTPUT_DIR=/media/Data2/nate/Results/MVSNet/tnt/Output_${DATASET}/
+DATA_DIR=/media/nate/Data/TNT/${DATASET}
+OUTPUT_DIR=/media/nate/Data/Results/MVSNet/tnt/Output_${DATASET}/
 FUSE_EXE=~/dev/research/Fusion/fusibile/fusibile
-MODEL=/media/Data/nate/Models/MVSNet/dtu/3DCNNs/model.ckpt
+MODEL=/media/nate/Data/Models/MVSNet/dtu/3DCNNs/model.ckpt
 METHOD=mvsnet
 SRC_DIR=../MVSNet/mvsnet/
 
-#W=1152
-#H=864
-W=1920
-H=1056
+W=1152
+H=864
 REG=3DCNNs
 DEPTH_PLANES=256
 SCALE=0.8
