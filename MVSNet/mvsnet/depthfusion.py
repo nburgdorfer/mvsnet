@@ -115,9 +115,9 @@ def fake_gipuma_normal(in_depth_path, out_normal_path):
 
 def mvsnet_to_gipuma(dense_folder, gipuma_point_folder):
     
-    image_folder = os.path.join(dense_folder, 'images')
-    cam_folder = os.path.join(dense_folder, 'cams')
-    depth_folder = os.path.join(dense_folder, 'depths_mvsnet')
+    image_folder = os.path.join(dense_folder, 'rgb')
+    cam_folder = os.path.join(dense_folder, 'cam')
+    depth_folder = os.path.join(dense_folder, 'depth')
 
     gipuma_cam_folder = os.path.join(gipuma_point_folder, 'cams')
     gipuma_image_folder = os.path.join(gipuma_point_folder, 'images')
@@ -132,14 +132,14 @@ def mvsnet_to_gipuma(dense_folder, gipuma_point_folder):
     image_names = os.listdir(image_folder)
     for image_name in image_names:
         image_prefix = os.path.splitext(image_name)[0]
-        in_cam_file = os.path.join(depth_folder, image_prefix+'.txt')
+        in_cam_file = os.path.join(cam_folder, image_prefix+'_cam.txt')
         out_cam_file = os.path.join(gipuma_cam_folder, image_name+'.P')
         mvsnet_to_gipuma_cam(in_cam_file, out_cam_file)
 
     # copy images to gipuma image folder    
     image_names = os.listdir(image_folder)
     for image_name in image_names:
-        in_image_file = os.path.join(depth_folder, image_name)
+        in_image_file = os.path.join(image_folder, image_name)
         out_image_file = os.path.join(gipuma_image_folder, image_name)
         shutil.copy(in_image_file, out_image_file)    
 
@@ -158,15 +158,16 @@ def mvsnet_to_gipuma(dense_folder, gipuma_point_folder):
         fake_gipuma_normal(out_depth_dmb, fake_normal_dmb)
 
 def probability_filter(dense_folder, prob_threshold):
-    image_folder = os.path.join(dense_folder, 'images')
-    depth_folder = os.path.join(dense_folder, 'depths_mvsnet')
+    image_folder = os.path.join(dense_folder, 'rgb')
+    depth_folder = os.path.join(dense_folder, 'depth')
+    conf_folder = os.path.join(dense_folder, 'confidence')
     
     # convert cameras 
     image_names = os.listdir(image_folder)
     for image_name in image_names:
         image_prefix = os.path.splitext(image_name)[0]
-        init_depth_map_path = os.path.join(depth_folder, image_prefix+'_init.pfm')
-        prob_map_path = os.path.join(depth_folder, image_prefix+'_prob.pfm')
+        init_depth_map_path = os.path.join(depth_folder, image_prefix+'_depth.pfm')
+        prob_map_path = os.path.join(conf_folder, image_prefix+'_conf.pfm')
         out_depth_map_path = os.path.join(depth_folder, image_prefix+'_prob_filtered.pfm')
 
 
